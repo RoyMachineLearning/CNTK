@@ -633,7 +633,7 @@ const Node *ONNXToCNTKHelper::GetChildNode(const Node *parentNode, const NodeArg
     Node::NodeConstIterator itChildNode = parentNode->InputNodesBegin();
     for (; itChildNode != parentNode->InputNodesEnd(); ++itChildNode)
     {
-        const Node *childNode = *itChildNode;
+        const Node *childNode = &(*itChildNode);
         const ConstPointerContainer<std::vector<NodeArg *>> &childOutputDefs = childNode->OutputDefs();
         nodeArgIndex = 0;
         for (ConstPointerContainer<std::vector<NodeArg *>>::ConstIterator itChildOutput = childOutputDefs.begin(); 
@@ -3003,7 +3003,7 @@ std::pair<const Node *, int> FindParentAndChildIndex(const Node *node)
     Node::NodeConstIterator it = node->OutputNodesBegin();
     if (it != node->OutputNodesEnd())
     {
-        const Node *parent = *it;
+        const Node *parent = &(*it);
         int index = 0;
         for (auto nodeArg : parent->InputDefs())
         {
@@ -3768,14 +3768,14 @@ std::pair<bool, std::vector<FunctionPtr>> ONNXToCNTKHelper::CheckNodeBelongsToOp
         Node::NodeConstIterator it = node->OutputNodesBegin();
         if (it != node->OutputNodesEnd())
         {
-            firstParentNode = *it;
+            firstParentNode = &(*it);
         }
         if (firstParentNode != nullptr)
         {
             it = firstParentNode->OutputNodesBegin();
             if (it != firstParentNode->OutputNodesEnd())
             {
-                grandParentNode = *it;
+                grandParentNode = &(*it);
             }
         }
 
